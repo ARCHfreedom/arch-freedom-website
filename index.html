@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Professional decking services by Arch Freedom LLC.">
-    <title>Arch Freedom LLC - Professional Decking Services</title>
+    <meta name="description" content="Professional outdoor services by Arch Freedom LLC.">
+    <title>Arch Freedom LLC - Professional Outdoor Services</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root { --primary-color: #1a1a1a; --secondary-color: #dc143c; --text-color: #333; --light-bg: #f5f5f5; --white: #ffffff; --border-radius: 8px; --transition: all 0.3s ease; }
@@ -19,6 +19,9 @@
         .nav a:hover { color: var(--secondary-color); }
         .nav a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background-color: var(--secondary-color); transition: var(--transition); }
         .nav a:hover::after { width: 100%; }
+        .tagline { background: linear-gradient(135deg, var(--secondary-color) 0%, #ff1744 100%); color: var(--white); padding: 40px 20px; text-align: center; }
+        .tagline h2 { font-size: 3rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
         .hero { background: linear-gradient(135deg, var(--primary-color) 0%, #2a2a2a 100%); color: var(--white); padding: 100px 20px; text-align: center; }
         .hero-content h1 { font-size: 3.5rem; margin-bottom: 20px; font-weight: 700; }
         .hero-content p { font-size: 1.3rem; margin-bottom: 40px; opacity: 0.9; }
@@ -55,8 +58,8 @@
         .contact-form-info p { margin-bottom: 20px; font-size: 1.05rem; line-height: 1.8; color: #666; }
         .footer { background-color: var(--primary-color); color: var(--white); text-align: center; padding: 30px 20px; margin-top: 60px; }
         .footer p { margin: 0; }
-        @media (max-width: 768px) { .header .container { flex-direction: column; gap: 15px; } .nav { gap: 15px; } .hero-content h1 { font-size: 2.2rem; } .hero-content p { font-size: 1.1rem; } .hero-buttons { flex-direction: column; align-items: center; } .btn { width: 100%; max-width: 300px; } .services h2, .gallery h2, .contact h2 { font-size: 2rem; } .contact-content { grid-template-columns: 1fr; gap: 30px; } .services-grid, .gallery-grid { grid-template-columns: 1fr; } }
-        @media (max-width: 480px) { .logo { height: 50px; } .nav { gap: 10px; font-size: 0.9rem; } .hero-content h1 { font-size: 1.8rem; } .hero-content p { font-size: 1rem; } .services h2, .gallery h2, .contact h2 { font-size: 1.5rem; margin-bottom: 40px; } .service-card { padding: 20px; } .contact-item { margin-bottom: 20px; } }
+        @media (max-width: 768px) { .header .container { flex-direction: column; gap: 15px; } .nav { gap: 15px; } .tagline h2 { font-size: 2rem; } .hero-content h1 { font-size: 2.2rem; } .hero-content p { font-size: 1.1rem; } .hero-buttons { flex-direction: column; align-items: center; } .btn { width: 100%; max-width: 300px; } .services h2, .gallery h2, .contact h2 { font-size: 2rem; } .contact-content { grid-template-columns: 1fr; gap: 30px; } .services-grid, .gallery-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 480px) { .logo { height: 50px; } .nav { gap: 10px; font-size: 0.9rem; } .tagline h2 { font-size: 1.5rem; } .hero-content h1 { font-size: 1.8rem; } .hero-content p { font-size: 1rem; } .services h2, .gallery h2, .contact h2 { font-size: 1.5rem; margin-bottom: 40px; } .service-card { padding: 20px; } .contact-item { margin-bottom: 20px; } }
     </style>
 </head>
 <body>
@@ -73,10 +76,16 @@
         </div>
     </header>
 
+    <section class="tagline">
+        <div class="container">
+            <h2>Freedom to Choose</h2>
+        </div>
+    </section>
+
     <section class="hero">
         <div class="container">
             <div class="hero-content">
-                <h1>Professional Decking Services</h1>
+                <h1>Professional Outdoor Services</h1>
                 <p>Transform your outdoor space with quality craftsmanship</p>
                 <div class="hero-buttons">
                     <a href="#contact" class="btn btn-primary">Get a Quote</a>
@@ -91,20 +100,28 @@
             <h2>Our Services</h2>
             <div class="services-grid">
                 <div class="service-card">
+                    <h3>Porch Installation</h3>
+                    <p>Repairs and updates for beautiful, functional porches</p>
+                </div>
+                <div class="service-card">
+                    <h3>Tree Cutting Services</h3>
+                    <p>Professional trims and lift accessible tree services</p>
+                </div>
+                <div class="service-card">
+                    <h3>Pergola & Gazebo</h3>
+                    <p>Custom pergola and gazebo installations</p>
+                </div>
+                <div class="service-card">
+                    <h3>Fencing</h3>
+                    <p>Horizontal and vertical fence designs</p>
+                </div>
+                <div class="service-card">
+                    <h3>Boat Dock Repairs</h3>
+                    <p>Professional boat dock repair and maintenance</p>
+                </div>
+                <div class="service-card">
                     <h3>Deck Construction</h3>
-                    <p>Custom-built decks designed to your specifications and style preferences</p>
-                </div>
-                <div class="service-card">
-                    <h3>Deck Repair</h3>
-                    <p>Professional repairs and maintenance to keep your deck safe and beautiful</p>
-                </div>
-                <div class="service-card">
-                    <h3>Deck Refinishing</h3>
-                    <p>Staining and sealing services to restore your deck's appearance</p>
-                </div>
-                <div class="service-card">
-                    <h3>Custom Designs</h3>
-                    <p>Unique deck designs tailored to your home and outdoor living needs</p>
+                    <p>Custom-built decks designed to your specifications</p>
                 </div>
             </div>
         </div>
@@ -116,25 +133,25 @@
             <div class="gallery-grid">
                 <div class="gallery-placeholder">
                     <div class="placeholder-text">
-                        <p>Your decking project photos will appear here</p>
+                        <p>Your project photos will appear here</p>
                         <p class="small">Add your images to showcase your best work</p>
                     </div>
                 </div>
                 <div class="gallery-placeholder">
                     <div class="placeholder-text">
-                        <p>Your decking project photos will appear here</p>
+                        <p>Your project photos will appear here</p>
                         <p class="small">Add your images to showcase your best work</p>
                     </div>
                 </div>
                 <div class="gallery-placeholder">
                     <div class="placeholder-text">
-                        <p>Your decking project photos will appear here</p>
+                        <p>Your project photos will appear here</p>
                         <p class="small">Add your images to showcase your best work</p>
                     </div>
                 </div>
                 <div class="gallery-placeholder">
                     <div class="placeholder-text">
-                        <p>Your decking project photos will appear here</p>
+                        <p>Your project photos will appear here</p>
                         <p class="small">Add your images to showcase your best work</p>
                     </div>
                 </div>
@@ -162,7 +179,7 @@
                     </div>
                 </div>
                 <div class="contact-form-info">
-                    <p>Ready to start your decking project? Reach out to us today for a free consultation and quote.</p>
+                    <p>Ready to start your project? Reach out to us today for a free consultation and quote.</p>
                     <p>We look forward to working with you!</p>
                 </div>
             </div>
