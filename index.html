@@ -58,6 +58,26 @@
         .contact-form-info p { margin-bottom: 20px; font-size: 1.05rem; line-height: 1.8; color: #666; }
         .footer { background-color: var(--primary-color); color: var(--white); text-align: center; padding: 30px 20px; margin-top: 60px; }
         .footer p { margin: 0; }
+        /* Customization Section Styles */
+        .customization { padding: 80px 20px; background: linear-gradient(135deg, #f9f9f9 0%, #f0f0f0 100%); }
+        .customization h2 { font-size: 2.5rem; text-align: center; margin-bottom: 20px; color: var(--primary-color); }
+        .section-intro { text-align: center; font-size: 1.1rem; color: #666; margin-bottom: 60px; max-width: 600px; margin-left: auto; margin-right: auto; }
+        .customization-form { max-width: 900px; margin: 0 auto; }
+        .form-section { background-color: var(--white); padding: 40px; margin-bottom: 30px; border-radius: var(--border-radius); box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08); }
+        .form-section h3 { font-size: 1.5rem; color: var(--primary-color); margin-bottom: 30px; padding-bottom: 15px; border-bottom: 2px solid var(--secondary-color); }
+        .form-group { margin-bottom: 35px; }
+        .form-group label { display: block; font-weight: 600; color: var(--primary-color); margin-bottom: 15px; font-size: 1.05rem; }
+        .form-group input[type="text"], .form-group input[type="email"], .form-group input[type="tel"], .form-group textarea { width: 100%; padding: 12px 15px; border: 2px solid #ddd; border-radius: var(--border-radius); font-family: inherit; font-size: 1rem; transition: var(--transition); }
+        .form-group input[type="text"]:focus, .form-group input[type="email"]:focus, .form-group input[type="tel"]:focus, .form-group textarea:focus { outline: none; border-color: var(--secondary-color); box-shadow: 0 0 0 3px rgba(220, 20, 60, 0.1); }
+        .options-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+        .option-card { position: relative; cursor: pointer; }
+        .option-card input[type="radio"], .option-card input[type="checkbox"] { position: absolute; opacity: 0; cursor: pointer; }
+        .option-content { padding: 20px; border: 2px solid #ddd; border-radius: var(--border-radius); background-color: var(--white); transition: var(--transition); text-align: center; }
+        .option-card input[type="radio"]:checked + .option-content, .option-card input[type="checkbox"]:checked + .option-content { border-color: var(--secondary-color); background-color: rgba(220, 20, 60, 0.05); box-shadow: 0 4px 12px rgba(220, 20, 60, 0.15); }
+        .option-card:hover .option-content { border-color: var(--secondary-color); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); }
+        .option-title { font-weight: 600; color: var(--primary-color); margin-bottom: 8px; font-size: 1rem; }
+        .option-desc { color: #666; font-size: 0.9rem; line-height: 1.4; }
+        .option-img { width: 100%; height: 120px; object-fit: cover; border-radius: 4px; margin-bottom: 12px; }
         @media (max-width: 768px) { .header .container { flex-direction: column; gap: 15px; } .nav { gap: 15px; } .tagline h2 { font-size: 2rem; } .hero-content h1 { font-size: 2.2rem; } .hero-content p { font-size: 1.1rem; } .hero-buttons { flex-direction: column; align-items: center; } .btn { width: 100%; max-width: 300px; } .services h2, .gallery h2, .contact h2 { font-size: 2rem; } .contact-content { grid-template-columns: 1fr; gap: 30px; } .services-grid, .gallery-grid { grid-template-columns: 1fr; } }
         @media (max-width: 480px) { .logo { height: 160px; } .nav { gap: 10px; font-size: 0.9rem; } .tagline h2 { font-size: 1.5rem; } .hero-content h1 { font-size: 1.8rem; } .hero-content p { font-size: 1rem; } .services h2, .gallery h2, .contact h2 { font-size: 1.5rem; margin-bottom: 40px; } .service-card { padding: 20px; } .contact-item { margin-bottom: 20px; } }
     </style>
@@ -85,10 +105,10 @@
     <section class="hero">
         <div class="container">
             <div class="hero-content">
-                <h1>Professional Outdoor Services</h1>
-                <p>Transform your outdoor space with quality craftsmanship</p>
+                <h1>Unique to Your Liking</h1>
+                <p>Freedom means the ability to choose. We build to your standards, your requirements, and your vision.</p>
                 <div class="hero-buttons">
-                    <a href="#contact" class="btn btn-primary">Get a Quote</a>
+                    <a href="#customization" class="btn btn-primary">Design Your Freedom</a>
                     <a href="#gallery" class="btn btn-secondary">View Our Work</a>
                 </div>
             </div>
@@ -117,8 +137,8 @@
                     <p>Professional boat dock repair and maintenance</p>
                 </div>
                 <div class="service-card">
-                    <h3>Deck Construction</h3>
-                    <p>Custom-built decks designed to your specifications</p>
+                    <h3>Custom Decking</h3>
+                    <p>No standard packages here. We specialize in unique, custom-built decks tailored to your lifestyle.</p>
                 </div>
             </div>
         </div>
@@ -150,6 +170,289 @@
         </div>
     </section>
 
+    <section id="customization" class="customization">
+        <div class="container">
+            <h2>Design Your Freedom: A Customization Blueprint</h2>
+            <p class="section-intro">Every project is unique. Tell us exactly what you want, and we'll build it to your standards.</p>
+            
+            <form id="customization-form" class="customization-form">
+                <!-- Section A: Structural Foundation -->
+                <div class="form-section">
+                    <h3>Section A: Structural Foundation (The "ARCH" Elements)</h3>
+                    
+                    <div class="form-group">
+                        <label>Layout Style</label>
+                        <div class="options-grid">
+                            <label class="option-card">
+                                <input type="radio" name="layout_style" value="multi-level" required>
+                                <div class="option-content">
+                                <img src="assets/thumbnails/multi-level.jpg" alt="Multi-Level" class="option-img">
+                                <div class="option-title">Multi-Level</div>
+                                <div class="option-desc">Tiered platforms for visual interest</div>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="radio" name="layout_style" value="wrap-around" required>
+                            <div class="option-content">
+                                <img src="assets/thumbnails/wrap-around.jpg" alt="Wrap-Around" class="option-img">
+                                <div class="option-title">Wrap-Around</div>
+                                <div class="option-desc">Expansive design around your home</div>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="radio" name="layout_style" value="traditional-platform" required>
+                            <div class="option-content">
+                                <img src="assets/thumbnails/traditional.jpg" alt="Traditional Platform" class="option-img">
+                                <div class="option-title">Traditional Platform</div>
+                                <div class="option-desc">Classic, clean, and timeless</div>
+                            </div>
+                        </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Staircase Design</label>
+                        <div class="options-grid">
+                            <label class="option-card">
+                                <input type="radio" name="staircase_design" value="wide-flared" required>
+                                <div class="option-content">
+                                <img src="assets/thumbnails/wide-flared.jpg" alt="Wide-Flared" class="option-img">
+                                <div class="option-title">Wide-Flared</div>
+                                <div class="option-desc">Grand entrance statement</div>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="radio" name="staircase_design" value="standard" required>
+                            <div class="option-content">
+                                <img src="assets/thumbnails/standard-stairs.jpg" alt="Standard" class="option-img">
+                                <div class="option-title">Standard</div>
+                                <div class="option-desc">Practical and proportional</div>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="radio" name="staircase_design" value="spiral" required>
+                            <div class="option-content">
+                                <img src="assets/thumbnails/spiral.jpg" alt="Spiral" class="option-img">
+                                <div class="option-title">Spiral</div>
+                                <div class="option-desc">Space-saving elegance</div>
+                            </div>
+                        </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section B: Material & Aesthetics -->
+                <div class="form-section">
+                    <h3>Section B: Material & Aesthetics (Your Unique Look)</h3>
+                    
+                    <div class="form-group">
+                        <label>Decking Surface</label>
+                        <div class="options-grid">
+                            <label class="option-card">
+                                <input type="radio" name="decking_surface" value="natural-wood" required>
+                                <div class="option-content">
+                                <img src="assets/thumbnails/natural-wood.jpg" alt="Natural Wood" class="option-img">
+                                <div class="option-title">Natural Wood</div>
+                                <div class="option-desc">Cedar or Ipe - warm and authentic</div>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="radio" name="decking_surface" value="composite" required>
+                            <div class="option-content">
+                                <img src="assets/thumbnails/composite.jpg" alt="Composite" class="option-img">
+                                <div class="option-title">High-Performance Composite</div>
+                                <div class="option-desc">Trex/TimberTech - low maintenance</div>
+                            </div>
+                        </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Color Palette</label>
+                        <div class="options-grid">
+                            <label class="option-card">
+                                <input type="radio" name="color_palette" value="warm-earth" required>
+                                <div class="option-content">
+                                <img src="assets/thumbnails/warm-earth.jpg" alt="Warm Earth Tones" class="option-img">
+                                <div class="option-title">Warm Earth Tones</div>
+                                <div class="option-desc">Golden, honey, and natural browns</div>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="radio" name="color_palette" value="modern-grey" required>
+                            <div class="option-content">
+                                <img src="assets/thumbnails/modern-grey.jpg" alt="Modern Greys" class="option-img">
+                                <div class="option-title">Modern Greys</div>
+                                <div class="option-desc">Contemporary and sophisticated</div>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="radio" name="color_palette" value="deep-espresso" required>
+                            <div class="option-content">
+                                <img src="assets/thumbnails/deep-espresso.jpg" alt="Deep Espresso" class="option-img">
+                                <div class="option-title">Deep Espresso</div>
+                                <div class="option-desc">Rich, dramatic, and bold</div>
+                            </div>
+                        </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Railing System</label>
+                        <div class="options-grid">
+                            <label class="option-card">
+                                <input type="radio" name="railing_system" value="classic-wood" required>
+                                <div class="option-content">
+                                <img src="assets/thumbnails/classic-wood.jpg" alt="Classic Wood" class="option-img">
+                                <div class="option-title">Classic Wood</div>
+                                <div class="option-desc">Timeless and traditional</div>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="radio" name="railing_system" value="cable-rail" required>
+                            <div class="option-content">
+                                <img src="assets/thumbnails/cable-rail.jpg" alt="Cable Rail" class="option-img">
+                                <div class="option-title">Sleek Cable Rail</div>
+                                <div class="option-desc">Modern and minimalist</div>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="radio" name="railing_system" value="glass" required>
+                            <div class="option-content">
+                                <img src="assets/thumbnails/glass.jpg" alt="Glass" class="option-img">
+                                <div class="option-title">Architectural Glass</div>
+                                <div class="option-desc">Unobstructed views, premium feel</div>
+                            </div>
+                        </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section C: Lifestyle Enhancements -->
+                <div class="form-section">
+                    <h3>Section C: Lifestyle Enhancements (Custom Requirements)</h3>
+                    
+                    <div class="form-group">
+                        <label>Lighting</label>
+                        <div class="options-grid">
+                            <label class="option-card">
+                                <input type="checkbox" name="lighting" value="led-post-caps">
+                                <div class="option-content">
+                                <img src="assets/thumbnails/led-post-caps.png" alt="LED Post-Caps" class="option-img">
+                                <div class="option-title">LED Post-Caps</div>
+                                <div class="option-desc">Ambient, elegant lighting</div>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="checkbox" name="lighting" value="under-rail">
+                            <div class="option-content">
+                                <img src="assets/thumbnails/under-rail.jpg" alt="Under-Rail" class="option-img">
+                                <div class="option-title">Under-Rail Lighting</div>
+                                <div class="option-desc">Dramatic accent lighting</div>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="checkbox" name="lighting" value="stair-tread">
+                            <div class="option-content">
+                                <img src="assets/thumbnails/stair-tread.jpg" alt="Stair-Tread" class="option-img">
+                                <div class="option-title">Stair-Tread Safety Lights</div>
+                                <div class="option-desc">Functional and beautiful</div>
+                            </div>
+                        </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Built-Ins</label>
+                        <div class="options-grid">
+                            <label class="option-card">
+                                <input type="checkbox" name="built_ins" value="custom-benches">
+                                <div class="option-content">
+                                <img src="assets/thumbnails/custom-benches.jpg" alt="Custom Benches" class="option-img">
+                                <div class="option-title">Custom Benches</div>
+                                <div class="option-desc">Seating with style</div>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="checkbox" name="built_ins" value="planter-boxes">
+                            <div class="option-content">
+                                <img src="assets/thumbnails/planter-boxes.jpg" alt="Planter Boxes" class="option-img">
+                                <div class="option-title">Planter Boxes</div>
+                                <div class="option-desc">Green living spaces</div>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="checkbox" name="built_ins" value="storage">
+                            <div class="option-content">
+                                <img src="assets/thumbnails/storage.jpg" alt="Storage" class="option-img">
+                                <div class="option-title">Integrated Storage</div>
+                                <div class="option-desc">Hidden organization</div>
+                            </div>
+                        </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Climate Control</label>
+                        <div class="options-grid">
+                            <label class="option-card">
+                                <input type="checkbox" name="climate" value="pergola">
+                                <div class="option-content">
+                                <img src="assets/thumbnails/pergola.jpg" alt="Pergola" class="option-img">
+                                <div class="option-title">Pergola Overhead</div>
+                                <div class="option-desc">Shade and style</div>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="checkbox" name="climate" value="privacy-screens">
+                            <div class="option-content">
+                                <img src="assets/thumbnails/privacy-screens.jpg" alt="Privacy Screens" class="option-img">
+                                <div class="option-title">Privacy Screens</div>
+                                <div class="option-desc">Seclusion and elegance</div>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="checkbox" name="climate" value="under-deck-drainage">
+                            <div class="option-content">
+                                <img src="assets/thumbnails/under-deck-drainage.jpg" alt="Under-Deck Drainage" class="option-img">
+                                <div class="option-title">Under-Deck Drainage</div>
+                                <div class="option-desc">Maximize your space</div>
+                            </div>
+                        </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Client Information -->
+                <div class="form-section">
+                    <h3>Your Information</h3>
+                    
+                    <div class="form-group">
+                        <label for="client_name">Full Name *</label>
+                        <input type="text" id="client_name" name="client_name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="client_email">Email Address *</label>
+                        <input type="email" id="client_email" name="client_email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="client_phone">Phone Number</label>
+                        <input type="tel" id="client_phone" name="client_phone">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="client_message">Additional Notes</label>
+                        <textarea id="client_message" name="client_message" rows="4" placeholder="Tell us more about your vision..."></textarea>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 1.1rem; padding: 20px;">Submit Your Customization Blueprint</button>
+            </form>
+        </div>
+    </section>
+
     <section id="contact" class="contact">
         <div class="container">
             <h2>Get In Touch</h2>
@@ -170,7 +473,7 @@
                     </div>
                 </div>
                 <div class="contact-form-info">
-                    <p>Ready to start your project? Reach out to us today for a free consultation and quote.</p>
+                    <p>Ready to start your unique project? Reach out to us today for a free consultation and let's build something to your standards.</p>
                     <p>We look forward to working with you!</p>
                 </div>
             </div>
@@ -182,5 +485,42 @@
             <p>&copy; 2026 Arch Freedom LLC. All rights reserved.</p>
         </div>
     </footer>
+    <script>
+        document.getElementById('customization-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            // Collect form data
+            const formData = new FormData(this);
+            const data = {
+                client_name: formData.get('client_name'),
+                client_email: formData.get('client_email'),
+                client_phone: formData.get('client_phone'),
+                client_message: formData.get('client_message'),
+                selections: {
+                    layout_style: formData.get('layout_style'),
+                    staircase_design: formData.get('staircase_design'),
+                    decking_surface: formData.get('decking_surface'),
+                    color_palette: formData.get('color_palette'),
+                    railing_system: formData.get('railing_system'),
+                    lighting: formData.getAll('lighting'),
+                    built_ins: formData.getAll('built_ins'),
+                    climate: formData.getAll('climate')
+                }
+            };
+
+            // Format the email body
+            const emailBody = `New Unique Project Inquiry - ${data.client_name}\n\nCLIENT INFORMATION:\nName: ${data.client_name}\nEmail: ${data.client_email}\nPhone: ${data.client_phone}\n\nCUSTOMIZATION SELECTIONS:\n\nSECTION A: STRUCTURAL FOUNDATION\nLayout Style: ${data.selections.layout_style}\nStaircase Design: ${data.selections.staircase_design}\n\nSECTION B: MATERIAL & AESTHETICS\nDecking Surface: ${data.selections.decking_surface}\nColor Palette: ${data.selections.color_palette}\nRailing System: ${data.selections.railing_system}\n\nSECTION C: LIFESTYLE ENHANCEMENTS\nLighting: ${data.selections.lighting.join(', ') || 'None selected'}\nBuilt-Ins: ${data.selections.built_ins.join(', ') || 'None selected'}\nClimate Control: ${data.selections.climate.join(', ') || 'None selected'}\n\nADDITIONAL NOTES:\n${data.client_message || 'No additional notes provided'}\n\nThis inquiry was submitted through the Design Your Freedom customization form on the ARCH Freedom LLC website.`;
+
+            // Send via mailto link (fallback method)
+            const mailtoLink = `mailto:archfreedom88@gmail.com?subject=${encodeURIComponent('New Unique Project Inquiry - ' + data.client_name)}&body=${encodeURIComponent(emailBody)}`;
+            window.location.href = mailtoLink;
+            
+            // Show confirmation
+            setTimeout(() => {
+                alert('Thank you! Your customization blueprint has been submitted. We\'ll be in touch soon!');
+                document.getElementById('customization-form').reset();
+            }, 500);
+        });
+    </script>
 </body>
 </html>
