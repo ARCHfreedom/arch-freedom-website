@@ -76,7 +76,8 @@
         .option-title { font-weight: 600; color: var(--primary-color); margin-bottom: 8px; font-size: 1rem; }
         .option-desc { color: #666; font-size: 0.9rem; line-height: 1.4; }
         .option-img { width: 100%; height: 120px; object-fit: contain; border-radius: 4px; margin-bottom: 12px; }
-        .option-card svg * { fill: initial; stroke: initial; }
+        .option-card svg * { fill: unset; stroke: unset; }
+        
         
         /* Toggle Switch Styles */
         .toggle-switch { position: relative; display: inline-block; width: 60px; height: 34px; margin-top: 10px; }
@@ -440,27 +441,21 @@
                             <label class="option-card">
                                 <input type="radio" name="footprint" value="Small 12'x12'">
                                 <div class="option-content">
-                                    <svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-    <path d="M50 10 L90 30 L50 50 L10 30 Z M10 30 L10 70 L50 90 L50 50 Z M50 50 L90 70 L90 30 L50 10 Z" fill="#8B4513" stroke="#5A2D0A"/>
-</svg>
+                                    <img src="assets/icons/deck_12x12.png" alt="Small 12'x12' Deck" class="option-img">
                                     <div class="option-title">Small 12'x12'</div>
                                 </div>
                             </label>
                             <label class="option-card">
                                 <input type="radio" name="footprint" value="Medium 16'x16'">
                                 <div class="option-content">
-                                    <svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-    <path d="M50 5 L95 25 L50 45 L5 25 Z M5 25 L5 75 L50 95 L50 45 Z M50 45 L95 75 L95 25 L50 5 Z" fill="#A0522D" stroke="#6F3C20"/>
-</svg>
+                                    <img src="assets/icons/deck_16x16.png" alt="Medium 16'x16' Deck" class="option-img">
                                     <div class="option-title">Medium 16'x16'</div>
                                 </div>
                             </label>
                             <label class="option-card">
                                 <input type="radio" name="footprint" value="Large 20'x20'">
                                 <div class="option-content">
-                                    <svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-    <path d="M50 0 L100 20 L50 40 L0 20 Z M0 20 L0 80 L50 100 L50 40 Z M50 40 L100 80 L100 20 L50 0 Z" fill="#CD853F" stroke="#8B5A2B"/>
-</svg>
+                                    <img src="assets/icons/deck_20x20.png" alt="Large 20'x20' Deck" class="option-img">
                                     <div class="option-title">Large 20'x20'</div>
                                 </div>
                             </label>
