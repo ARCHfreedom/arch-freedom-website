@@ -1,6 +1,55 @@
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('customizationForm');
+    const progressFill = document.getElementById('progress-fill');
+    const progressPercentage = document.getElementById('progress-percentage');
+    const summaryModal = document.getElementById('summaryModal');
+    const summaryContent = document.getElementById('summaryContent');
 
+    // --- Progress Tracking Logic ---
+    const sections = document.querySelectorAll('.form-section');
+    const totalSections = sections.length;
+
+    function updateProgress() {
+        let completedSections = 0;
+        sections.forEach(section => {
+            const inputs = section.querySelectorAll('input, textarea, select');
+            let isSectionComplete = false;
+            
+            for (let input of inputs) {
+                if (input.required) {
+                    if ((input.type === 'radio' || input.type === 'checkbox')) {
+                        const name = input.name;
+                        if (section.querySelector(`input[name="${name}"]:checked`)) {
+                            isSectionComplete = true;
+                        } else {
+                            isSectionComplete = false;
+                            break;
+                        }
+                    } else if (input.value.trim() !== '') {
+                        isSectionComplete = true;
+                    } else {
+                        isSectionComplete = false;
+                        break;
+                    }
+                } else {
+                    // If no required fields, consider it complete if any field is touched or just by default
+                    // For this form, most sections have required radios.
+                    if (inputs.length > 0) isSectionComplete = true;
+                }
+            }
+            if (isSectionComplete) completedSections++;
+        });
+
+        const percentage = Math.round((completedSections / totalSections) * 100);
+        progressFill.style.width = percentage + '%';
+        progressPercentage.textContent = percentage + '%';
+    }
+
+    form.addEventListener('change', updateProgress);
+    form.addEventListener('input', updateProgress);
+    updateProgress(); // Initial check
+
+    // --- Form Submission Logic ---
     form.addEventListener('submit', async function(event) {
         event.preventDefault();
 
@@ -16,128 +65,111 @@ document.addEventListener('DOMContentLoaded', function() {
         // Collect all form data
         for (let [key, value] of formData.entries()) {
             if (key === 'site_photos') {
-                // Handle multiple files
-                if (!data[key]) {
-                    data[key] = [];
-                }
-                if (value.name) { // Check if it's a valid file
+                if (!data[key]) data[key] = [];
+                if (value.name) {
                     data[key].push({ name: value.name, type: value.type, size: value.size });
                 }
             } else if (key === 'custom_footprint' && formData.get('footprint') !== 'Custom') {
-                // Only include custom_footprint if 'Custom' is selected
                 continue;
             } else if (key === 'heavy_load_support') {
-                data[key] = value === 'on'; // Convert checkbox value to boolean
-            } else if (form.elements[key] && form.elements[key].type === 'checkbox') {
-                // Handle multiple checkboxes for lighting, built_ins, climate
-                if (!data[key]) {
-                    data[key] = [];
-                }
+                data[key] = value === 'on';
+            } else if (form.elements[key] && (form.elements[key].type === 'checkbox' || (form.elements[key].length && form.elements[key][0].type === 'checkbox'))) {
+                if (!data[key]) data[key] = [];
                 data[key].push(value);
             } else {
                 data[key] = value;
             }
         }
 
-        // Convert checkbox arrays to comma-separated strings
-        if (data.lighting) data.lighting = data.lighting.join(', ');
-        if (data.built_ins) data.built_ins = data.built_ins.join(', ');
-        if (data.climate) data.climate = data.climate.join(', ');
+        // Format multi-selects for email
+        const formattedData = {...data};
+        if (Array.isArray(formattedData.lighting)) formattedData.lighting = formattedData.lighting.join(', ');
+        if (Array.isArray(formattedData.built_ins)) formattedData.built_ins = formattedData.built_ins.join(', ');
+        if (Array.isArray(formattedData.climate)) formattedData.climate = formattedData.climate.join(', ');
 
         // Construct email body
-        let emailBody = 'New Unique Project Inquiry - ' + (data.client_name || 'Anonymous') + '\n\n';
-        emailBody += 'Client Information:\n';
-        emailBody += `Name: ${data.client_name || 'N/A'}\n`;
-        emailBody += `Email: ${data.client_email || 'N/A'}\n`;
-        emailBody += `Phone: ${data.client_phone || 'N/A'}\n`;
-        emailBody += `Message: ${data.client_message || 'N/A'}\n\n`;
+        let emailBody = `New Unique Project Inquiry - ${data.client_name || 'Anonymous'}\n\n`;
+        emailBody += `Client: ${data.client_name}\nEmail: ${data.client_email}\nPhone: ${data.client_phone || 'N/A'}\n\n`;
+        emailBody += `Blueprint Details:\n`;
+        emailBody += `- Layout: ${data.layout_style}\n- Stairs: ${data.staircase_design}\n`;
+        emailBody += `- Surface: ${data.decking_surface}\n- Color: ${data.color_palette}\n- Railing: ${data.railing_system}\n`;
+        emailBody += `- Enhancements: ${formattedData.lighting || 'None'}, ${formattedData.built_ins || 'None'}, ${formattedData.climate || 'None'}\n`;
+        emailBody += `- Dimensions: ${data.footprint} (${data.linear_footage_railing} ft)\n- Heavy Load: ${data.heavy_load_support ? 'Yes' : 'No'}\n`;
 
-        emailBody += 'Customization Blueprint:\n';
-
-        emailBody += 'Section A: Structural Foundation\n';
-        emailBody += `Layout Style: ${data.layout_style || 'N/A'}\n`;
-        emailBody += `Staircase Design: ${data.staircase_design || 'N/A'}\n`;
-        emailBody += `Framing: High-quality pressure-treated timber for a classic, sturdy foundation.\n\n`;
-
-        emailBody += 'Section B: Material & Aesthetics\n';
-        emailBody += `Decking Surface: ${data.decking_surface || 'N/A'}\n`;
-        emailBody += `Color Palette: ${data.color_palette || 'N/A'}\n`;
-        emailBody += `Railing System: ${data.railing_system || 'N/A'}\n\n`;
-
-        emailBody += 'Section C: Lifestyle Enhancements\n';
-        emailBody += `Lighting: ${data.lighting || 'None selected'}\n`;
-        emailBody += `Built-ins: ${data.built_ins || 'None selected'}\n`;
-        emailBody += `Climate Control: ${data.climate || 'None selected'}\n\n`;
-
-        emailBody += 'Section D: Scope & Scale (Project Dimensions)\n';
-        emailBody += `Approximate Footprint: ${data.footprint || 'N/A'} ${data.footprint === 'Custom' ? '(' + (data.custom_footprint || 'N/A') + ')' : ''}\n`;
-        emailBody += `Elevation Level: ${data.elevation || 'N/A'}\n\n`;
-
-        emailBody += 'Section E: Detailed Infrastructure\n';
-        emailBody += `Linear Footage for Railing: ${data.linear_footage_railing || 'N/A'} feet\n`;
-        emailBody += `Heavy Load Support: ${data.heavy_load_support ? 'Yes' : 'No'}\n\n`;
-
-        emailBody += 'Section F: Mission Sight (Site Photos)\n';
-        if (data.site_photos && data.site_photos.length > 0) {
-            emailBody += 'Uploaded Photos:\n';
-            data.site_photos.forEach(file => {
-                emailBody += `- ${file.name} (${(file.size / 1024).toFixed(2)} KB)\n`;
+        // Send to Formspree
+        try {
+            const response = await fetch('https://formspree.io/f/xzzdnyyl', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                body: JSON.stringify({
+                    subject: `New Blueprint: ${data.client_name}`,
+                    message: emailBody,
+                    _replyto: data.client_email
+                })
             });
-        } else {
-            emailBody += 'No photos uploaded.\n';
-        }
 
-        // Send email using Formspree
-        const formspreeEndpoint = 'https://formspree.io/f/xzzdnyyl'; // Formspree endpoint for jonathan@archfreedom.com
-        const response = await fetch(formspreeEndpoint, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify({
-                subject: `New Unique Project Inquiry - ${data.client_name || 'Anonymous'}`, // Email subject
-                _replyto: data.client_email, // Set reply-to to client's email
-                message: emailBody // Full email body
-            })
-        });
-
-        if (response.ok) {
-            alert('Your customization blueprint has been sent! We will get back to you shortly.');
-            form.reset();
-        } else {
-            alert('There was an error sending your blueprint. Please try again or contact us directly.');
+            if (response.ok) {
+                showSummary(data);
+                form.reset();
+                updateProgress();
+            } else {
+                alert('Submission failed. Please try again.');
+            }
+        } catch (error) {
+            alert('An error occurred. Please check your connection.');
+        } finally {
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
         }
-    }).finally(() => {
-        submitBtn.textContent = originalText;
-        submitBtn.disabled = false;
     });
-});
 
-// Show custom footprint input when "Custom" is selected
-document.addEventListener('change', function(event) {
-    if (event.target.name === 'footprint') {
-        const customInput = document.getElementById('custom_footprint_input');
-        if (event.target.value === 'Custom') {
-            customInput.style.display = 'block';
-        } else {
-            customInput.style.display = 'none';
-        }
+    function showSummary(data) {
+        const items = [
+            { label: 'Layout Style', value: data.layout_style },
+            { label: 'Staircase', value: data.staircase_design },
+            { label: 'Decking Surface', value: data.decking_surface },
+            { label: 'Color Palette', value: data.color_palette },
+            { label: 'Railing System', value: data.railing_system },
+            { label: 'Footprint', value: data.footprint === 'Custom' ? data.custom_footprint : data.footprint },
+            { label: 'Linear Footage', value: data.linear_footage_railing + ' ft' },
+            { label: 'Heavy Load Support', value: data.heavy_load_support ? 'Yes' : 'No' }
+        ];
+
+        summaryContent.innerHTML = items.map(item => `
+            <div class="summary-item">
+                <h4>${item.label}</h4>
+                <p>${item.value || 'Not specified'}</p>
+            </div>
+        `).join('');
+
+        summaryModal.style.display = 'block';
     }
 });
 
-// Allow radio buttons to be deselected by clicking them again
+// Deselection logic for radio buttons
 document.querySelectorAll('.option-card input[type="radio"]').forEach(radio => {
     radio.addEventListener('click', function(e) {
         if (this.previousValue === this.value) {
             this.checked = false;
             this.previousValue = null;
-            // Trigger change event to update any dependent UI (like custom footprint)
             this.dispatchEvent(new Event('change', { bubbles: true }));
         } else {
-            // Clear previousValue for other radios in the same group
             document.querySelectorAll(`input[name="${this.name}"]`).forEach(r => r.previousValue = null);
             this.previousValue = this.value;
         }
     });
+});
+
+// Custom footprint toggle
+document.addEventListener('change', function(event) {
+    if (event.target.name === 'footprint') {
+        const customInput = document.getElementById('custom_footprint_input');
+        if (event.target.value === 'Custom') {
+            customInput.style.display = 'block';
+            customInput.required = true;
+        } else {
+            customInput.style.display = 'none';
+            customInput.required = false;
+        }
+    }
 });
