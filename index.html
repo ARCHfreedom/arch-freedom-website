@@ -227,6 +227,56 @@
         .option-desc { color: #666; font-size: 0.9rem; line-height: 1.4; }
         .option-img { width: 100%; height: 120px; object-fit: contain; border-radius: 4px; margin-bottom: 12px; }
         .option-card svg * { fill: unset; stroke: unset; }
+
+        /* Project Type Selector */
+        .project-type-selector {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 35px 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            border-left: 5px solid var(--secondary-color);
+        }
+        .project-type-selector h3 {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+        }
+        .project-type-selector p {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+        .project-type-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+        }
+        .project-type-btn {
+            padding: 18px 10px;
+            border: 2px solid #ddd;
+            border-radius: var(--border-radius);
+            background: var(--white);
+            cursor: pointer;
+            text-align: center;
+            font-family: inherit;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            transition: var(--transition);
+        }
+        .project-type-btn:hover {
+            border-color: var(--secondary-color);
+            box-shadow: 0 2px 8px rgba(220,20,60,0.15);
+        }
+        .project-type-btn.active {
+            border-color: var(--secondary-color);
+            background-color: rgba(220,20,60,0.05);
+            box-shadow: 0 4px 12px rgba(220,20,60,0.15);
+            color: var(--secondary-color);
+        }
+        .project-type-btn .type-icon { font-size: 1.8rem; display: block; margin-bottom: 6px; }
+        .form-section-hidden { display: none; }
         
         
         /* Toggle Switch Styles */
@@ -351,8 +401,29 @@
             </div>
 
             <form id="customizationForm" class="customization-form">
+
+                <!-- Project Type Selector -->
+                <div class="project-type-selector" id="projectTypeSelector">
+                    <h3>What are we building for you?</h3>
+                    <p>Select your project type to see only the relevant options — no clutter, just what matters for your build.</p>
+                    <div class="project-type-grid">
+                        <button type="button" class="project-type-btn" data-type="deck">
+                            <span class="type-icon">🏗️</span>Deck
+                        </button>
+                        <button type="button" class="project-type-btn" data-type="fencing">
+                            <span class="type-icon">🪵</span>Fencing
+                        </button>
+                        <button type="button" class="project-type-btn" data-type="gazebo">
+                            <span class="type-icon">⛺</span>Gazebo
+                        </button>
+                        <button type="button" class="project-type-btn" data-type="multiple">
+                            <span class="type-icon">✨</span>Multiple
+                        </button>
+                    </div>
+                </div>
+
                 <!-- Section A: Structural Foundation -->
-                <div class="form-section">
+                <div class="form-section form-section-hidden" data-project="deck multiple">
                     <h3>Section A: Structural Foundation (The "ARCH" Elements)</h3>
                     <div class="form-group">
                         <label>Layout Style</label>
@@ -416,7 +487,7 @@
                 </div>
 
                 <!-- Section B: Material & Aesthetics -->
-                <div class="form-section">
+                <div class="form-section form-section-hidden" data-project="deck multiple">
                     <h3>Section B: Material & Aesthetics (Your Unique Look)</h3>
                     <div class="form-group">
                         <label>Decking Surface</label>
@@ -502,7 +573,7 @@
                 </div>
 
                 <!-- Section C: Lifestyle Enhancements -->
-                <div class="form-section">
+                <div class="form-section form-section-hidden" data-project="deck multiple">
                     <h3>Section C: Lifestyle Enhancements (Custom Requirements)</h3>
                     <div class="form-group">
                         <label>Lighting</label>
@@ -612,7 +683,7 @@
                 </div>
 
                 <!-- Section D: Scope & Scale -->
-                <div class="form-section">
+                <div class="form-section form-section-hidden" data-project="deck gazebo multiple">
                     <h3>Section D: Scope & Scale (Project Dimensions)</h3>
                     <div class="form-group">
                         <label for="footprint">Approximate Footprint</label>
@@ -676,7 +747,7 @@
                 </div>
 
                 <!-- Section E: Detailed Infrastructure -->
-                <div class="form-section">
+                <div class="form-section form-section-hidden" data-project="deck fencing multiple">
                     <h3>Section E: Detailed Infrastructure</h3>
                     <div class="form-group">
                         <label for="linear_footage_railing">Linear Footage for Railing or Fencing (Estimated total feet) <span class="tooltip-icon">?<span class="tooltip-text">The total length of railing or fencing needed, measured in a straight line.</span></span></label>
@@ -693,8 +764,185 @@
                     </div>
                 </div>
 
+                <!-- Fencing Section -->
+                <div class="form-section form-section-hidden" data-project="fencing multiple" id="fencingSection">
+                    <h3>Fencing: Style & Specifications</h3>
+                    <div class="form-group">
+                        <label>Fence Orientation</label>
+                        <div class="options-grid">
+                            <label class="option-card">
+                                <input type="radio" name="fence_orientation" value="Vertical Slat">
+                                <div class="option-content">
+                                    <div class="option-title">Vertical Slat</div>
+                                    <div class="option-desc">Clean, modern lines with a contemporary feel</div>
+                                </div>
+                            </label>
+                            <label class="option-card">
+                                <input type="radio" name="fence_orientation" value="Horizontal Slat">
+                                <div class="option-content">
+                                    <div class="option-title">Horizontal Slat</div>
+                                    <div class="option-desc">Sleek, low-profile design with a bold statement</div>
+                                </div>
+                            </label>
+                            <label class="option-card">
+                                <input type="radio" name="fence_orientation" value="Board-on-Board">
+                                <div class="option-content">
+                                    <div class="option-title">Board-on-Board</div>
+                                    <div class="option-desc">Classic privacy with overlapping boards</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Fence Material</label>
+                        <div class="options-grid">
+                            <label class="option-card">
+                                <input type="radio" name="fence_material" value="Natural Cedar">
+                                <div class="option-content">
+                                    <div class="option-title">Natural Cedar</div>
+                                    <div class="option-desc">Warm, natural beauty with lasting durability</div>
+                                </div>
+                            </label>
+                            <label class="option-card">
+                                <input type="radio" name="fence_material" value="Pressure-Treated Pine">
+                                <div class="option-content">
+                                    <div class="option-title">Pressure-Treated Pine</div>
+                                    <div class="option-desc">Budget-friendly and weather-resistant</div>
+                                </div>
+                            </label>
+                            <label class="option-card">
+                                <input type="radio" name="fence_material" value="Composite">
+                                <div class="option-content">
+                                    <div class="option-title">Composite</div>
+                                    <div class="option-desc">Zero maintenance, maximum longevity</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="fence_linear_footage">Total Linear Footage Needed <span class="tooltip-icon">?<span class="tooltip-text">The total length of fencing needed, measured in a straight line around the perimeter.</span></span></label>
+                        <input type="number" id="fence_linear_footage" name="fence_linear_footage" placeholder="e.g., 150" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="fence_height">Desired Fence Height</label>
+                        <div class="options-grid">
+                            <label class="option-card">
+                                <input type="radio" name="fence_height" value="4 ft">
+                                <div class="option-content">
+                                    <div class="option-title">4 ft</div>
+                                    <div class="option-desc">Decorative boundary</div>
+                                </div>
+                            </label>
+                            <label class="option-card">
+                                <input type="radio" name="fence_height" value="6 ft">
+                                <div class="option-content">
+                                    <div class="option-title">6 ft</div>
+                                    <div class="option-desc">Standard privacy height</div>
+                                </div>
+                            </label>
+                            <label class="option-card">
+                                <input type="radio" name="fence_height" value="8 ft">
+                                <div class="option-content">
+                                    <div class="option-title">8 ft</div>
+                                    <div class="option-desc">Maximum privacy and security</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gazebo Section -->
+                <div class="form-section form-section-hidden" data-project="gazebo multiple" id="gazeboSection">
+                    <h3>Gazebo: Design & Specifications</h3>
+                    <div class="form-group">
+                        <label>Gazebo Size</label>
+                        <div class="options-grid">
+                            <label class="option-card">
+                                <input type="radio" name="gazebo_size" value="Small 10'x10'">
+                                <div class="option-content">
+                                    <div class="option-title">Small 10\'x10\'</div>
+                                    <div class="option-desc">Intimate retreat for two</div>
+                                </div>
+                            </label>
+                            <label class="option-card">
+                                <input type="radio" name="gazebo_size" value="Medium 12'x12'">
+                                <div class="option-content">
+                                    <div class="option-title">Medium 12\'x12\'</div>
+                                    <div class="option-desc">Perfect for small gatherings</div>
+                                </div>
+                            </label>
+                            <label class="option-card">
+                                <input type="radio" name="gazebo_size" value="Large 14'x14'">
+                                <div class="option-content">
+                                    <div class="option-title">Large 14\'x14\'</div>
+                                    <div class="option-desc">Spacious entertaining pavilion</div>
+                                </div>
+                            </label>
+                            <label class="option-card">
+                                <input type="radio" name="gazebo_size" value="Custom">
+                                <div class="option-content">
+                                    <div class="option-title">Custom Size</div>
+                                    <div class="option-desc">We build to your exact dimensions</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Roof Style</label>
+                        <div class="options-grid">
+                            <label class="option-card">
+                                <input type="radio" name="gazebo_roof" value="Hip Roof">
+                                <div class="option-content">
+                                    <div class="option-title">Hip Roof</div>
+                                    <div class="option-desc">Classic, elegant all-around slope</div>
+                                </div>
+                            </label>
+                            <label class="option-card">
+                                <input type="radio" name="gazebo_roof" value="Gable Roof">
+                                <div class="option-content">
+                                    <div class="option-title">Gable Roof</div>
+                                    <div class="option-desc">Bold peak with dramatic height</div>
+                                </div>
+                            </label>
+                            <label class="option-card">
+                                <input type="radio" name="gazebo_roof" value="Flat/Modern">
+                                <div class="option-content">
+                                    <div class="option-title">Flat / Modern</div>
+                                    <div class="option-desc">Sleek, contemporary silhouette</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Roofing Material</label>
+                        <div class="options-grid">
+                            <label class="option-card">
+                                <input type="radio" name="gazebo_roofing" value="Shingles">
+                                <div class="option-content">
+                                    <div class="option-title">Architectural Shingles</div>
+                                    <div class="option-desc">Durable, weather-resistant, classic look</div>
+                                </div>
+                            </label>
+                            <label class="option-card">
+                                <input type="radio" name="gazebo_roofing" value="Metal Roofing">
+                                <div class="option-content">
+                                    <div class="option-title">Metal Roofing</div>
+                                    <div class="option-desc">Long-lasting and modern aesthetic</div>
+                                </div>
+                            </label>
+                            <label class="option-card">
+                                <input type="radio" name="gazebo_roofing" value="Cedar Shake">
+                                <div class="option-content">
+                                    <div class="option-title">Cedar Shake</div>
+                                    <div class="option-desc">Natural, rustic charm</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Section F: Mission Sight -->
-                <div class="form-section">
+                <div class="form-section form-section-hidden" data-project="deck fencing gazebo multiple">
                     <h3>Section F: Mission Sight (Site Photos)</h3>
                     <p class="section-intro">Upload photos of your project site. Please include a wide shot, a view from the house, and photos showing the ground slope.</p>
                     <div class="form-group">
@@ -704,7 +952,7 @@
                 </div>
 
                 <!-- Your Information -->
-                <div class="form-section">
+                <div class="form-section form-section-hidden" data-project="deck fencing gazebo multiple">
                     <h3>Your Information</h3>
                     <div class="form-group">
                         <label for="client_name">Full Name</label>

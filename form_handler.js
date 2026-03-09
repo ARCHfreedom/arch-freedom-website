@@ -5,43 +5,68 @@ document.addEventListener('DOMContentLoaded', function() {
     const summaryModal = document.getElementById('summaryModal');
     const summaryContent = document.getElementById('summaryContent');
 
+    // --- Project Type Selector Logic ---
+    let currentProjectType = null;
+
+    const projectTypeBtns = document.querySelectorAll('.project-type-btn');
+    const allFormSections = document.querySelectorAll('.form-section[data-project]');
+
+    function showSectionsForType(type) {
+        currentProjectType = type;
+        allFormSections.forEach(section => {
+            const projects = section.getAttribute('data-project').split(' ');
+            if (projects.includes(type)) {
+                section.classList.remove('form-section-hidden');
+            } else {
+                section.classList.add('form-section-hidden');
+            }
+        });
+        updateProgress();
+    }
+
+    projectTypeBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            projectTypeBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            showSectionsForType(this.getAttribute('data-type'));
+            // Smooth scroll to first visible section
+            const firstVisible = document.querySelector('.form-section:not(.form-section-hidden)');
+            if (firstVisible) {
+                setTimeout(() => firstVisible.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+            }
+        });
+    });
+
     // --- Progress Tracking Logic ---
-    // Each individual radio group or required text field is its own step.
-    // Every single selection/deselection updates the bar immediately.
-    const trackedSteps = [
-        // Section A
-        { type: 'radio', name: 'layout_style' },
-        { type: 'radio', name: 'staircase_design' },
-        // Section B
-        { type: 'radio', name: 'decking_surface' },
-        { type: 'radio', name: 'color_palette' },
-        { type: 'radio', name: 'railing_system' },
-        // Section D
-        { type: 'radio', name: 'footprint' },
-        { type: 'radio', name: 'elevation' },
-        // Your Information
-        { type: 'text', name: 'client_name' },
-        { type: 'text', name: 'client_email' }
-    ];
-    const totalSteps = trackedSteps.length;
+    // Steps per project type — only the relevant ones count toward progress.
+    const stepsByType = {
+        deck:     ['layout_style','staircase_design','decking_surface','color_palette','railing_system','footprint','elevation','client_name','client_email'],
+        fencing:  ['fence_orientation','fence_material','fence_height','client_name','client_email'],
+        gazebo:   ['gazebo_size','gazebo_roof','gazebo_roofing','footprint','elevation','client_name','client_email'],
+        multiple: ['layout_style','staircase_design','decking_surface','color_palette','railing_system','footprint','elevation','fence_orientation','fence_material','client_name','client_email']
+    };
 
     function updateProgress() {
+        if (!currentProjectType) {
+            progressFill.style.width = '0%';
+            progressPercentage.textContent = '0%';
+            return;
+        }
+
+        const steps = stepsByType[currentProjectType] || [];
         let completedSteps = 0;
 
-        trackedSteps.forEach(step => {
-            if (step.type === 'radio') {
-                if (form.querySelector(`input[name="${step.name}"]:checked`)) {
-                    completedSteps++;
-                }
-            } else {
-                const el = form.querySelector(`[name="${step.name}"]`);
-                if (el && el.value && el.value.trim() !== '') {
-                    completedSteps++;
-                }
+        steps.forEach(name => {
+            const radioChecked = form.querySelector(`input[name="${name}"]:checked`);
+            const textEl = form.querySelector(`input[name="${name}"], textarea[name="${name}"]`);
+            if (radioChecked) {
+                completedSteps++;
+            } else if (textEl && textEl.type !== 'radio' && textEl.value && textEl.value.trim() !== '') {
+                completedSteps++;
             }
         });
 
-        const percentage = Math.round((completedSteps / totalSteps) * 100);
+        const percentage = Math.round((completedSteps / steps.length) * 100);
         progressFill.style.width = percentage + '%';
         progressPercentage.textContent = percentage + '%';
     }
