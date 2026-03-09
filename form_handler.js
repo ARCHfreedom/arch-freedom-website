@@ -6,41 +6,44 @@ document.addEventListener('DOMContentLoaded', function() {
     const summaryContent = document.getElementById('summaryContent');
 
     // --- Progress Tracking Logic ---
-    const sections = document.querySelectorAll('.form-section');
-    const totalSections = sections.length;
+    // Define the specific required radio groups that must be answered to count a section as complete.
+    // Only these groups count toward progress — optional checkboxes and file uploads do NOT.
+    const requiredGroups = [
+        ['layout_style', 'staircase_design'],   // Section A
+        ['decking_surface', 'color_palette', 'railing_system'], // Section B
+        // Section C is optional (checkboxes) — skip
+        ['footprint', 'elevation'],              // Section D
+        // Section E is optional (number + toggle) — skip
+        // Section F is optional (file upload) — skip
+        ['client_name', 'client_email']          // Your Information
+    ];
+    const totalTrackedSections = requiredGroups.length;
 
     function updateProgress() {
         let completedSections = 0;
-        sections.forEach(section => {
-            const inputs = section.querySelectorAll('input, textarea, select');
-            let isSectionComplete = false;
-            
-            for (let input of inputs) {
-                if (input.required) {
-                    if ((input.type === 'radio' || input.type === 'checkbox')) {
-                        const name = input.name;
-                        if (section.querySelector(`input[name="${name}"]:checked`)) {
-                            isSectionComplete = true;
-                        } else {
-                            isSectionComplete = false;
-                            break;
-                        }
-                    } else if (input.value.trim() !== '') {
-                        isSectionComplete = true;
-                    } else {
-                        isSectionComplete = false;
-                        break;
+
+        requiredGroups.forEach(groupNames => {
+            let allAnswered = true;
+            groupNames.forEach(name => {
+                const el = form.querySelector(`[name="${name}"]`);
+                if (!el) { allAnswered = false; return; }
+
+                if (el.type === 'radio') {
+                    // Radio: check if any in the group is checked
+                    if (!form.querySelector(`input[name="${name}"]:checked`)) {
+                        allAnswered = false;
                     }
                 } else {
-                    // If no required fields, consider it complete if any field is touched or just by default
-                    // For this form, most sections have required radios.
-                    if (inputs.length > 0) isSectionComplete = true;
+                    // Text/email/tel: check if it has a non-empty value
+                    if (!el.value || el.value.trim() === '') {
+                        allAnswered = false;
+                    }
                 }
-            }
-            if (isSectionComplete) completedSections++;
+            });
+            if (allAnswered) completedSections++;
         });
 
-        const percentage = Math.round((completedSections / totalSections) * 100);
+        const percentage = Math.round((completedSections / totalTrackedSections) * 100);
         progressFill.style.width = percentage + '%';
         progressPercentage.textContent = percentage + '%';
     }
