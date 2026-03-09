@@ -6,44 +6,42 @@ document.addEventListener('DOMContentLoaded', function() {
     const summaryContent = document.getElementById('summaryContent');
 
     // --- Progress Tracking Logic ---
-    // Define the specific required radio groups that must be answered to count a section as complete.
-    // Only these groups count toward progress — optional checkboxes and file uploads do NOT.
-    const requiredGroups = [
-        ['layout_style', 'staircase_design'],   // Section A
-        ['decking_surface', 'color_palette', 'railing_system'], // Section B
-        // Section C is optional (checkboxes) — skip
-        ['footprint', 'elevation'],              // Section D
-        // Section E is optional (number + toggle) — skip
-        // Section F is optional (file upload) — skip
-        ['client_name', 'client_email']          // Your Information
+    // Each individual radio group or required text field is its own step.
+    // Every single selection/deselection updates the bar immediately.
+    const trackedSteps = [
+        // Section A
+        { type: 'radio', name: 'layout_style' },
+        { type: 'radio', name: 'staircase_design' },
+        // Section B
+        { type: 'radio', name: 'decking_surface' },
+        { type: 'radio', name: 'color_palette' },
+        { type: 'radio', name: 'railing_system' },
+        // Section D
+        { type: 'radio', name: 'footprint' },
+        { type: 'radio', name: 'elevation' },
+        // Your Information
+        { type: 'text', name: 'client_name' },
+        { type: 'text', name: 'client_email' }
     ];
-    const totalTrackedSections = requiredGroups.length;
+    const totalSteps = trackedSteps.length;
 
     function updateProgress() {
-        let completedSections = 0;
+        let completedSteps = 0;
 
-        requiredGroups.forEach(groupNames => {
-            let allAnswered = true;
-            groupNames.forEach(name => {
-                const el = form.querySelector(`[name="${name}"]`);
-                if (!el) { allAnswered = false; return; }
-
-                if (el.type === 'radio') {
-                    // Radio: check if any in the group is checked
-                    if (!form.querySelector(`input[name="${name}"]:checked`)) {
-                        allAnswered = false;
-                    }
-                } else {
-                    // Text/email/tel: check if it has a non-empty value
-                    if (!el.value || el.value.trim() === '') {
-                        allAnswered = false;
-                    }
+        trackedSteps.forEach(step => {
+            if (step.type === 'radio') {
+                if (form.querySelector(`input[name="${step.name}"]:checked`)) {
+                    completedSteps++;
                 }
-            });
-            if (allAnswered) completedSections++;
+            } else {
+                const el = form.querySelector(`[name="${step.name}"]`);
+                if (el && el.value && el.value.trim() !== '') {
+                    completedSteps++;
+                }
+            }
         });
 
-        const percentage = Math.round((completedSections / totalTrackedSections) * 100);
+        const percentage = Math.round((completedSteps / totalSteps) * 100);
         progressFill.style.width = percentage + '%';
         progressPercentage.textContent = percentage + '%';
     }
