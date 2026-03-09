@@ -125,3 +125,19 @@ document.addEventListener('change', function(event) {
         }
     }
 });
+
+// Allow radio buttons to be deselected by clicking them again
+document.querySelectorAll('.option-card input[type="radio"]').forEach(radio => {
+    radio.addEventListener('click', function(e) {
+        if (this.previousValue === this.value) {
+            this.checked = false;
+            this.previousValue = null;
+            // Trigger change event to update any dependent UI (like custom footprint)
+            this.dispatchEvent(new Event('change', { bubbles: true }));
+        } else {
+            // Clear previousValue for other radios in the same group
+            document.querySelectorAll(`input[name="${this.name}"]`).forEach(r => r.previousValue = null);
+            this.previousValue = this.value;
+        }
+    });
+});
