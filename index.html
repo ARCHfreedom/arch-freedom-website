@@ -334,6 +334,150 @@
         input[type="file"]::file-selector-button:hover { background-color: #b01030; }
         @media (max-width: 768px) { .header .container { flex-direction: column; gap: 15px; } .nav { gap: 15px; } .tagline h2 { font-size: 2rem; } .hero-content h1 { font-size: 2.2rem; } .hero-content p { font-size: 1.1rem; } .hero-buttons { flex-direction: column; align-items: center; } .btn { width: 100%; max-width: 300px; } .services h2, .gallery h2, .contact h2 { font-size: 2rem; } .contact-content { grid-template-columns: 1fr; gap: 30px; } .services-grid, .gallery-grid { grid-template-columns: 1fr; } }
         @media (max-width: 480px) { .logo { height: 160px; } .nav { gap: 10px; font-size: 0.9rem; } .tagline h2 { font-size: 1.5rem; } .hero-content h1 { font-size: 1.8rem; } .hero-content p { font-size: 1rem; } .services h2, .gallery h2, .contact h2 { font-size: 1.5rem; margin-bottom: 40px; } .service-card { padding: 20px; } .contact-item { margin-bottom: 20px; } }
+        /* ══ ARCH FREEDOM SIGNATURE SECTION ══ */
+        .arch-signature {
+            background: linear-gradient(160deg, #0f0f0f 0%, #1a1a1a 60%, #0d0d0d 100%);
+            padding: 100px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        .arch-signature::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #dc143c, transparent);
+        }
+        .arch-signature::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #dc143c, transparent);
+        }
+        .signature-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .signature-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+        .signature-label {
+            display: inline-block;
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: #dc143c;
+            border: 1px solid #dc143c;
+            padding: 5px 16px;
+            border-radius: 2px;
+            margin-bottom: 22px;
+        }
+        .signature-header h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 900;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #ffffff;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+        .signature-header p {
+            font-size: 1.05rem;
+            color: #999;
+            max-width: 680px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+        .signature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            margin-bottom: 60px;
+        }
+        .signature-card {
+            background: #161616;
+            border: 1px solid #2a2a2a;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .signature-card:hover {
+            transform: translateY(-4px);
+            border-color: #dc143c;
+        }
+        .signature-img-wrap {
+            position: relative;
+            overflow: hidden;
+        }
+        .signature-img-wrap img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        .signature-card:hover .signature-img-wrap img {
+            transform: scale(1.03);
+        }
+        .signature-img-label {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            background: rgba(0,0,0,0.75);
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            padding: 5px 12px;
+            border-radius: 3px;
+            border-left: 3px solid #dc143c;
+        }
+        .signature-card-body {
+            padding: 28px 28px 32px;
+        }
+        .signature-card-body h3 {
+            font-size: 1.1rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #ffffff;
+            margin-bottom: 14px;
+        }
+        .signature-card-body p {
+            font-size: 0.92rem;
+            color: #888;
+            line-height: 1.8;
+            margin-bottom: 18px;
+        }
+        .signature-detail {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #dc143c;
+            padding-top: 14px;
+            border-top: 1px solid #2a2a2a;
+        }
+        .signature-cta {
+            text-align: center;
+            padding-top: 20px;
+        }
+        .signature-cta p {
+            font-size: 1rem;
+            color: #666;
+            letter-spacing: 1px;
+            margin-bottom: 24px;
+            font-style: italic;
+        }
+        @media (max-width: 768px) {
+            .signature-grid { grid-template-columns: 1fr; }
+            .arch-signature { padding: 64px 16px; }
+            .signature-img-wrap img { height: 220px; }
+        }
     </style>
 </head>
 <body>
@@ -420,6 +564,45 @@
                 <div class="gallery-item">
                     <img src="assets/gallery/gallery_item_6_final.jpg" alt="Custom Deck Project 6">
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ THE ARCH FREEDOM SIGNATURE SECTION ══ -->
+    <section id="signature" class="arch-signature">
+        <div class="signature-inner">
+            <div class="signature-header">
+                <span class="signature-label">Craftsmanship Identity</span>
+                <h2>The ARCH Freedom Signature</h2>
+                <p>Every structure we build carries a mark of distinction. Not a sticker. Not a stamp from a catalog. A permanent, hand-applied brand — burned into natural wood or precision-mounted in brushed stainless steel on composite. It is our commitment to the build, left behind for the life of the structure.</p>
+            </div>
+            <div class="signature-grid">
+                <div class="signature-card">
+                    <div class="signature-img-wrap">
+                        <img src="assets/gallery/brand_wood_post.png" alt="ARCH Freedom AF monogram branded into cedar deck post" loading="lazy">
+                        <div class="signature-img-label">Natural Wood</div>
+                    </div>
+                    <div class="signature-card-body">
+                        <h3>Electric Brand &mdash; All-Wood Builds</h3>
+                        <p>Every structure built entirely from natural wood receives our AF monogram burned directly into the post face with a precision electric branding iron. Cedar, pine, hardwood &mdash; the mark becomes part of the material itself, deepening in character as the structure weathers and ages. No adhesive. No hardware. Just the wood and the mark.</p>
+                        <div class="signature-detail">2.5&Prime; &times; 2.5&Prime; &nbsp;&bull;&nbsp; Electric Brand Iron &nbsp;&bull;&nbsp; All-Wood Builds</div>
+                    </div>
+                </div>
+                <div class="signature-card">
+                    <div class="signature-img-wrap">
+                        <img src="assets/gallery/brand_composite_placard.png" alt="ARCH Freedom LLC brushed stainless placard on composite deck" loading="lazy">
+                        <div class="signature-img-label">Composite Deck</div>
+                    </div>
+                    <div class="signature-card-body">
+                        <h3>Brushed Stainless Placard &mdash; Composite &amp; Plastic-Accent Builds</h3>
+                        <p>Any build incorporating composite decking, PVC trim, or plastic-accent materials receives our full signature as a precision-engraved brushed stainless steel nameplate. Four countersunk screws. Fully weatherproof. Where a brand iron cannot bond to the material, the placard speaks with the same permanence &mdash; mounted to last the life of the structure.</p>
+                        <div class="signature-detail">Brushed 304 Stainless &nbsp;&bull;&nbsp; Engraved &nbsp;&bull;&nbsp; Composite &amp; Plastic-Accent Builds</div>
+                    </div>
+                </div>
+            </div>
+            <div class="signature-cta">
+                <p>Ask about our signature branding on your next build.</p>
+                <a href="#customization" class="btn btn-primary">Start Your Blueprint</a>
             </div>
         </div>
     </section>
