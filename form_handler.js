@@ -122,16 +122,23 @@ document.addEventListener('DOMContentLoaded', function() {
         emailBody += `- Enhancements: ${formattedData.lighting || 'None'}, ${formattedData.built_ins || 'None'}, ${formattedData.climate || 'None'}\n`;
         emailBody += `- Dimensions: ${data.footprint} (${data.linear_footage_railing} ft)\n- Heavy Load: ${data.heavy_load_support ? 'Yes' : 'No'}\n`;
 
-        // Send to Formspree
+        // Send to Netlify Forms
         try {
-            const response = await fetch('https://formspree.io/f/xzzdnyyl', {
+            const netlifyData = new FormData();
+            netlifyData.append('form-name', 'blueprint');
+            netlifyData.append('subject', `New Blueprint: ${data.client_name || 'Anonymous'}`);
+            netlifyData.append('message', emailBody);
+            // Append all form fields
+            for (const [key, value] of Object.entries(formattedData)) {
+                if (value !== undefined && value !== null) {
+                    netlifyData.append(key, Array.isArray(value) ? value.join(', ') : value);
+                }
+            }
+
+            const response = await fetch('/', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-                body: JSON.stringify({
-                    subject: `New Blueprint: ${data.client_name}`,
-                    message: emailBody,
-                    _replyto: data.client_email
-                })
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams(netlifyData).toString()
             });
 
             if (response.ok) {

@@ -622,7 +622,9 @@
                 </div>
             </div>
 
-            <form id="customizationForm" class="customization-form">
+            <form id="customizationForm" class="customization-form" name="blueprint" netlify netlify-honeypot="bot-field" data-netlify="true">
+                <input type="hidden" name="form-name" value="blueprint">
+                <p class="hidden" style="display:none;"><label>Don't fill this out: <input name="bot-field"></label></p>
 
                 <!-- Project Type Selector -->
                 <div class="project-type-selector" id="projectTypeSelector">
