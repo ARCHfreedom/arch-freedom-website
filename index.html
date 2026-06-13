@@ -242,42 +242,7 @@
             .summary-header img { height: 30px !important; }
         }
         @media print {
-            @page { size: letter; margin: 0.5in; }
-            html, body { height: auto !important; overflow: visible !important; }
-            body * { visibility: hidden; }
-            #summaryModal, #summaryModal * { visibility: visible; }
-            #summaryModal {
-                position: fixed !important;
-                left: 0 !important; top: 0 !important;
-                width: 100% !important; height: auto !important;
-                background: white !important;
-                overflow: visible !important;
-                display: block !important;
-                z-index: 99999 !important;
-            }
-            .modal-overlay { background: none !important; position: static !important; }
-            .modal-content {
-                box-shadow: none !important;
-                margin: 0 !important;
-                width: 100% !important;
-                max-width: 100% !important;
-                padding: 20px !important;
-                min-height: unset !important;
-                overflow: visible !important;
-                page-break-after: avoid !important;
-            }
-            .summary-grid {
-                display: grid !important;
-                grid-template-columns: 1fr 1fr !important;
-                gap: 12px !important;
-                page-break-inside: avoid !important;
-            }
-            .summary-item {
-                padding: 8px !important;
-                page-break-inside: avoid !important;
-            }
-            .summary-actions { display: none !important; }
-            .summary-footer { page-break-inside: avoid !important; }
+            body { display: none !important; }
         }
         .form-section { background-color: var(--white); padding: 40px; margin-bottom: 30px; border-radius: var(--border-radius); box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08); }
         .form-section h3 { font-size: 1.5rem; color: var(--primary-color); margin-bottom: 30px; padding-bottom: 15px; border-bottom: 2px solid var(--secondary-color); }
@@ -1306,7 +1271,7 @@
             <div class="summary-footer">
                 <p><strong>Your blueprint has been sent to our Master Craftsman.</strong> We will be in touch within 24 hours to discuss your unique build.</p>
                 <div class="summary-actions">
-                    <button onclick="window.print()" class="btn btn-primary">Print / Save as PDF</button>
+                    <button onclick="printBlueprint()" class="btn btn-primary">Print / Save as PDF</button>
                     <button onclick="document.getElementById('summaryModal').style.display='none'" class="btn btn-secondary">Close</button>
                 </div>
             </div>
@@ -1320,5 +1285,51 @@
     </footer>
 
     <script src="form_handler.js"></script>
+
+<script>
+function printBlueprint() {
+    var modal = document.getElementById('summaryModal');
+    var content = modal.querySelector('.modal-content');
+    
+    // Extract logo src
+    var logoImg = content.querySelector('.summary-header img');
+    var logoSrc = logoImg ? logoImg.src : '';
+    
+    // Extract summary items
+    var items = content.querySelectorAll('.summary-item');
+    var itemsHTML = '';
+    items.forEach(function(item) {
+        itemsHTML += '<div class="item"><div class="label">' + (item.querySelector('h4') ? item.querySelector('h4').innerText : '') + '</div><div class="value">' + (item.querySelector('p') ? item.querySelector('p').innerText : '') + '</div></div>';
+    });
+    
+    // Extract footer text
+    var footer = content.querySelector('.summary-footer p');
+    var footerText = footer ? footer.innerHTML : '';
+    
+    var printWindow = window.open('', '_blank', 'width=800,height=600');
+    printWindow.document.write('<!DOCTYPE html><html><head><title>ARCH Freedom LLC — Blueprint Summary</title><style>');
+    printWindow.document.write('@page { size: letter; margin: 0.5in; }');
+    printWindow.document.write('* { margin: 0; padding: 0; box-sizing: border-box; }');
+    printWindow.document.write('body { font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif; color: #333; background: white; }');
+    printWindow.document.write('.header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #dc143c; padding-bottom: 12px; margin-bottom: 20px; }');
+    printWindow.document.write('.header h3 { font-size: 1.1rem; color: #1a1a1a; }');
+    printWindow.document.write('.header img { height: 50px; width: auto; }');
+    printWindow.document.write('.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px; }');
+    printWindow.document.write('.item { padding: 8px 0; border-bottom: 1px solid #eee; }');
+    printWindow.document.write('.label { font-size: 0.75rem; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 3px; }');
+    printWindow.document.write('.value { font-size: 0.95rem; font-weight: 600; color: #1a1a1a; }');
+    printWindow.document.write('.footer { border-top: 1px solid #eee; padding-top: 16px; text-align: center; font-size: 0.9rem; color: #444; line-height: 1.6; }');
+    printWindow.document.write('</style></head><body>');
+    printWindow.document.write('<div class="header"><h3>Your Customization Blueprint Summary</h3>');
+    if (logoSrc) printWindow.document.write('<img src="' + logoSrc + '" alt="ARCH Freedom LLC">');
+    printWindow.document.write('</div>');
+    printWindow.document.write('<div class="grid">' + itemsHTML + '</div>');
+    printWindow.document.write('<div class="footer">' + footerText + '</div>');
+    printWindow.document.write('</body></html>');
+    printWindow.document.close();
+    printWindow.focus();
+    setTimeout(function() { printWindow.print(); printWindow.close(); }, 500);
+}
+</script>
 </body>
 </html>
