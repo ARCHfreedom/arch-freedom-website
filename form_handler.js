@@ -124,21 +124,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Send to Netlify Forms
         try {
-            const netlifyData = new FormData();
-            netlifyData.append('form-name', 'blueprint');
-            netlifyData.append('subject', `New Blueprint: ${data.client_name || 'Anonymous'}`);
-            netlifyData.append('message', emailBody);
-            // Append all form fields
-            for (const [key, value] of Object.entries(formattedData)) {
-                if (value !== undefined && value !== null) {
-                    netlifyData.append(key, Array.isArray(value) ? value.join(', ') : value);
-                }
-            }
+            const encode = (data) =>
+                Object.keys(data)
+                    .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(data[key] ?? ''))
+                    .join('&');
+
+            const payload = {
+                'form-name': 'blueprint',
+                'subject': `New Blueprint: ${data.client_name || 'Anonymous'}`,
+                'message': emailBody,
+                ...Object.fromEntries(
+                    Object.entries(formattedData).map(([k, v]) => [k, Array.isArray(v) ? v.join(', ') : (v ?? '')])
+                )
+            };
 
             const response = await fetch('/', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: new URLSearchParams(netlifyData).toString()
+                body: encode(payload)
             });
 
             if (response.ok) {
