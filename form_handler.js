@@ -122,6 +122,34 @@ document.addEventListener('DOMContentLoaded', function() {
         emailBody += `- Enhancements: ${formattedData.lighting || 'None'}, ${formattedData.built_ins || 'None'}, ${formattedData.climate || 'None'}\n`;
         emailBody += `- Dimensions: ${data.footprint} (${data.linear_footage_railing} ft)\n- Heavy Load: ${data.heavy_load_support ? 'Yes' : 'No'}\n`;
 
+        // Upload site photos to ImgBB then include links in submission
+        const photoInput = document.getElementById('site_photos');
+        let photoLinks = [];
+        if (photoInput && photoInput.files && photoInput.files.length > 0) {
+            submitBtn.textContent = 'Uploading photos...';
+            const IMGBB_KEY = '38cf7780f1d32d80902cbfa20c6c8f0f';
+            const uploadPromises = Array.from(photoInput.files).map(async (file) => {
+                try {
+                    const fd = new FormData();
+                    fd.append('image', file);
+                    const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_KEY}`, {
+                        method: 'POST', body: fd
+                    });
+                    const json = await res.json();
+                    if (json && json.success) return json.data.url;
+                } catch (e) { /* silent fail */ }
+                return null;
+            });
+            const results = await Promise.all(uploadPromises);
+            photoLinks = results.filter(Boolean);
+        }
+        // Append photo links to email body
+        if (photoLinks.length > 0) {
+            emailBody += `\nSite Photos (${photoLinks.length}):\n` + photoLinks.map((u, i) => `Photo ${i+1}: ${u}`).join('\n') + '\n';
+        } else if (photoInput && photoInput.files && photoInput.files.length > 0) {
+            emailBody += `\nSite Photos: ${photoInput.files.length} photo(s) selected but could not be uploaded automatically. Please follow up with customer.\n`;
+        }
+
         // Send to Netlify Forms
         try {
             const encode = (data) =>
@@ -133,6 +161,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 'form-name': 'blueprint',
                 'subject': `New Blueprint: ${data.client_name || 'Anonymous'}`,
                 'message': emailBody,
+                'site_photo_links': photoLinks.length > 0 ? photoLinks.join(' | ') : 'No photos uploaded',
                 ...Object.fromEntries(
                     Object.entries(formattedData).map(([k, v]) => [k, Array.isArray(v) ? v.join(', ') : (v ?? '')])
                 )
