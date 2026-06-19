@@ -84,6 +84,12 @@
         .partner-note { font-size: 0.82rem; color: #777; max-width: 280px; line-height: 1.5; margin: 0; }
         .footer { background-color: var(--primary-color); color: var(--white); text-align: center; padding: 30px 20px; margin-top: 60px; }
         .footer p { margin: 0; }
+        .credentials-bar { border-top: 1px solid rgba(255,255,255,0.12); margin-top: 14px; padding-top: 14px; display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; }
+        .credentials-bar span { font-size: 0.78rem; color: rgba(255,255,255,0.6); letter-spacing: 0.02em; line-height: 1.6; }
+        .credentials-bar .cred-dot { color: var(--secondary-color); font-size: 0.6rem; flex-shrink: 0; }
+        .contact-credentials { margin-top: 28px; padding-top: 22px; border-top: 1px solid #e0e0e0; display: flex; align-items: flex-start; gap: 10px; }
+        .contact-credentials .cred-icon { color: var(--secondary-color); font-size: 1rem; flex-shrink: 0; margin-top: 2px; }
+        .contact-credentials p { margin: 0; font-size: 0.88rem; color: #666; line-height: 1.7; font-style: italic; }
         /* Customization Section Styles */
         .customization { padding: 80px 20px; background: linear-gradient(135deg, #f9f9f9 0%, #f0f0f0 100%); }
         .customization h2 { font-size: 2.5rem; text-align: center; margin-bottom: 20px; color: var(--primary-color); }
@@ -1258,6 +1264,10 @@
                 <div class="contact-form-info">
                     <p>Ready to transform your outdoor space? Start by filling out our <strong>Design Your Freedom</strong> blueprint above, or reach out to us directly via email, phone, or Facebook.</p>
                     <p>We look forward to building your unique sanctuary.</p>
+                    <div class="contact-credentials">
+                        <span class="cred-icon">&#10003;</span>
+                        <p>ARCH Freedom LLC is fully licensed, insured, and committed to building to local code specifications across Northern Alabama.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1299,6 +1309,14 @@
     <footer class="footer">
         <div class="container">
             <p>&copy; 2026 Arch Freedom LLC. All rights reserved.</p>
+            <div class="credentials-bar">
+                <span class="cred-dot">&#9679;</span>
+                <span>Licensed &amp; Insured</span>
+                <span class="cred-dot">&#9679;</span>
+                <span>Built to Local Code Specifications</span>
+                <span class="cred-dot">&#9679;</span>
+                <span>Serving Northern Alabama</span>
+            </div>
         </div>
     </footer>
 
