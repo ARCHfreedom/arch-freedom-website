@@ -242,8 +242,25 @@
             .summary-header img { height: 30px !important; }
         }
         @media print {
-            body { display: none !important; }
+            body > *:not(#printPage) { display: none !important; }
+            #printPage { display: block !important; }
         }
+        #printPage {
+            display: none;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            background: white;
+            padding: 0.5in;
+            box-sizing: border-box;
+        }
+        #printPage .ph { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #dc143c; padding-bottom: 12px; margin-bottom: 20px; }
+        #printPage .ph h3 { font-size: 1.1rem; color: #1a1a1a; margin: 0; }
+        #printPage .ph img { height: 50px; width: auto; }
+        #printPage .pg { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px; }
+        #printPage .pi { padding: 8px 0; border-bottom: 1px solid #eee; }
+        #printPage .pl { font-size: 0.75rem; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 3px; }
+        #printPage .pv { font-size: 0.95rem; font-weight: 600; color: #1a1a1a; }
+        #printPage .pf { border-top: 1px solid #eee; padding-top: 16px; text-align: center; font-size: 0.9rem; color: #444; line-height: 1.6; }
         .form-section { background-color: var(--white); padding: 40px; margin-bottom: 30px; border-radius: var(--border-radius); box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08); }
         .form-section h3 { font-size: 1.5rem; color: var(--primary-color); margin-bottom: 30px; padding-bottom: 15px; border-bottom: 2px solid var(--secondary-color); }
         .form-group { margin-bottom: 35px; }
@@ -620,6 +637,7 @@
 
             <form id="customizationForm" class="customization-form" name="blueprint" netlify netlify-honeypot="bot-field" data-netlify="true">
                 <input type="hidden" name="form-name" value="blueprint">
+                <input type="hidden" name="message" value="">
                 <p class="hidden" style="display:none;"><label>Don't fill this out: <input name="bot-field"></label></p>
 
                 <!-- Project Type Selector -->
@@ -1286,49 +1304,36 @@
 
     <script src="form_handler.js"></script>
 
+<div id="printPage">
+    <div class="ph">
+        <h3>Your Customization Blueprint Summary</h3>
+        <img id="printLogo" src="" alt="ARCH Freedom LLC">
+    </div>
+    <div id="printGrid" class="pg"></div>
+    <div id="printFooter" class="pf"></div>
+</div>
 <script>
 function printBlueprint() {
     var modal = document.getElementById('summaryModal');
     var content = modal.querySelector('.modal-content');
-    
-    // Extract logo src
+    // Copy logo
     var logoImg = content.querySelector('.summary-header img');
-    var logoSrc = logoImg ? logoImg.src : '';
-    
-    // Extract summary items
+    var printLogo = document.getElementById('printLogo');
+    if (logoImg) printLogo.src = logoImg.src;
+    // Copy summary items
     var items = content.querySelectorAll('.summary-item');
-    var itemsHTML = '';
+    var gridHTML = '';
     items.forEach(function(item) {
-        itemsHTML += '<div class="item"><div class="label">' + (item.querySelector('h4') ? item.querySelector('h4').innerText : '') + '</div><div class="value">' + (item.querySelector('p') ? item.querySelector('p').innerText : '') + '</div></div>';
+        var label = item.querySelector('h4') ? item.querySelector('h4').innerText : '';
+        var value = item.querySelector('p') ? item.querySelector('p').innerText : '';
+        gridHTML += '<div class="pi"><div class="pl">' + label + '</div><div class="pv">' + value + '</div></div>';
     });
-    
-    // Extract footer text
+    document.getElementById('printGrid').innerHTML = gridHTML;
+    // Copy footer
     var footer = content.querySelector('.summary-footer p');
-    var footerText = footer ? footer.innerHTML : '';
-    
-    var printWindow = window.open('', '_blank', 'width=800,height=600');
-    printWindow.document.write('<!DOCTYPE html><html><head><title>ARCH Freedom LLC — Blueprint Summary</title><style>');
-    printWindow.document.write('@page { size: letter; margin: 0.5in; }');
-    printWindow.document.write('* { margin: 0; padding: 0; box-sizing: border-box; }');
-    printWindow.document.write('body { font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif; color: #333; background: white; }');
-    printWindow.document.write('.header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #dc143c; padding-bottom: 12px; margin-bottom: 20px; }');
-    printWindow.document.write('.header h3 { font-size: 1.1rem; color: #1a1a1a; }');
-    printWindow.document.write('.header img { height: 50px; width: auto; }');
-    printWindow.document.write('.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px; }');
-    printWindow.document.write('.item { padding: 8px 0; border-bottom: 1px solid #eee; }');
-    printWindow.document.write('.label { font-size: 0.75rem; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 3px; }');
-    printWindow.document.write('.value { font-size: 0.95rem; font-weight: 600; color: #1a1a1a; }');
-    printWindow.document.write('.footer { border-top: 1px solid #eee; padding-top: 16px; text-align: center; font-size: 0.9rem; color: #444; line-height: 1.6; }');
-    printWindow.document.write('</style></head><body>');
-    printWindow.document.write('<div class="header"><h3>Your Customization Blueprint Summary</h3>');
-    if (logoSrc) printWindow.document.write('<img src="' + logoSrc + '" alt="ARCH Freedom LLC">');
-    printWindow.document.write('</div>');
-    printWindow.document.write('<div class="grid">' + itemsHTML + '</div>');
-    printWindow.document.write('<div class="footer">' + footerText + '</div>');
-    printWindow.document.write('</body></html>');
-    printWindow.document.close();
-    printWindow.focus();
-    setTimeout(function() { printWindow.print(); printWindow.close(); }, 500);
+    document.getElementById('printFooter').innerHTML = footer ? footer.innerHTML : '';
+    // Print current page — works on mobile without popup blocker
+    window.print();
 }
 </script>
 </body>
