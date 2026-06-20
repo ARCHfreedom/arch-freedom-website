@@ -918,8 +918,8 @@
                     </div>
                 </div>
 
-                <!-- Section D: Scope & Scale -->
-                <div class="form-section form-section-hidden" data-project="deck gazebo multiple">
+                <!-- Section D: Scope & Scale (Deck / Multiple) -->
+                <div class="form-section form-section-hidden" data-project="deck multiple">
                     <h3>Section D: Scope & Scale (Project Dimensions)</h3>
                     <div class="form-group">
                         <label for="footprint">Approximate Footprint</label>
@@ -969,6 +969,64 @@
                                 <input type="radio" name="elevation" value="Elevated/2nd Story">
                                 <div class="option-content">
                                     <img src="assets/thumbnails/elevated-deck.jpg" alt="Elevated/2nd Story Deck" style="width:100%;height:160px;object-fit:cover;border-radius:8px;margin-bottom:10px;">
+                                    <div class="option-title">Elevated/2nd Story</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section D: Scope & Scale (Gazebo only) -->
+                <div class="form-section form-section-hidden" data-project="gazebo">
+                    <h3>Section D: Scope & Scale (Project Dimensions)</h3>
+                    <div class="form-group">
+                        <label for="footprint">Approximate Footprint</label>
+                        <div class="options-grid">
+                            <label class="option-card">
+                                <input type="radio" name="footprint" value="Small 12'x12'">
+                                <div class="option-content">
+                                    <img src="assets/thumbnails/gazebo-small.jpg" alt="Small 10'x10' Gazebo" style="width:100%;height:140px;object-fit:cover;border-radius:8px;margin-bottom:10px;">
+                                    <div class="option-title">Small 10'x10'</div>
+                                </div>
+                            </label>
+                            <label class="option-card">
+                                <input type="radio" name="footprint" value="Medium 16'x16'">
+                                <div class="option-content">
+                                    <img src="assets/thumbnails/gazebo-medium.jpg" alt="Medium 12'x12' Gazebo" style="width:100%;height:140px;object-fit:cover;border-radius:8px;margin-bottom:10px;">
+                                    <div class="option-title">Medium 12'x12'</div>
+                                </div>
+                            </label>
+                            <label class="option-card">
+                                <input type="radio" name="footprint" value="Large 20'x20'">
+                                <div class="option-content">
+                                    <img src="assets/thumbnails/gazebo-large.jpg" alt="Large 14'x14' Gazebo" style="width:100%;height:140px;object-fit:cover;border-radius:8px;margin-bottom:10px;">
+                                    <div class="option-title">Large 14'x14'</div>
+                                </div>
+                            </label>
+                            <label class="option-card">
+                                <input type="radio" name="footprint" value="Custom">
+                                <div class="option-content">
+                                    <div style="width:100%;height:140px;background:linear-gradient(135deg,#1a1a1a,#3a3a3a);border-radius:8px;margin-bottom:10px;display:flex;align-items:center;justify-content:center;font-size:48px;">✏️</div>
+                                    <div class="option-title">Custom Size</div>
+                                    <input type="text" name="custom_footprint" id="custom_footprint_input_gazebo" placeholder="e.g., 16'x20'" class="custom-input" style="display:none;">
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Elevation Level</label>
+                        <div class="options-grid">
+                            <label class="option-card">
+                                <input type="radio" name="elevation" value="Ground Level">
+                                <div class="option-content">
+                                    <img src="assets/thumbnails/ground-level-deck.jpg" alt="Ground Level" style="width:100%;height:160px;object-fit:cover;border-radius:8px;margin-bottom:10px;">
+                                    <div class="option-title">Ground Level</div>
+                                </div>
+                            </label>
+                            <label class="option-card">
+                                <input type="radio" name="elevation" value="Elevated/2nd Story">
+                                <div class="option-content">
+                                    <img src="assets/thumbnails/elevated-deck.jpg" alt="Elevated" style="width:100%;height:160px;object-fit:cover;border-radius:8px;margin-bottom:10px;">
                                     <div class="option-title">Elevated/2nd Story</div>
                                 </div>
                             </label>
