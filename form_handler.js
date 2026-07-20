@@ -140,7 +140,8 @@ document.addEventListener('DOMContentLoaded', function() {
         emailBody += `CLIENT INFO\n`;
         emailBody += `Name:    ${data.client_name || 'N/A'}\n`;
         emailBody += `Email:   ${data.client_email || 'N/A'}\n`;
-        emailBody += `Phone:   ${data.client_phone || 'N/A'}\n\n`;
+        emailBody += `Phone:   ${data.client_phone || 'N/A'}\n`;
+        emailBody += `Address: ${data.client_address || 'N/A'}\n\n`;
 
         emailBody += `PROJECT TYPE: ${currentProjectType ? currentProjectType.toUpperCase() : 'N/A'}\n\n`;
 
@@ -209,7 +210,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Keep client fields for Netlify's spam filter and searchability
                 'client_name': data.client_name || '',
                 'client_email': data.client_email || '',
-                'client_phone': data.client_phone || ''
+                'client_phone': data.client_phone || '',
+                'client_address': data.client_address || ''
             };
 
             const response = await fetch('/', {
@@ -235,6 +237,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function showSummary(data, photoLinks) {
         const items = [
+            { label: 'Address', value: data.client_address },
             { label: 'Layout Style', value: data.layout_style },
             { label: 'Staircase', value: data.staircase_design },
             { label: 'Decking Surface', value: data.decking_surface },
